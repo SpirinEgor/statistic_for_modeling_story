@@ -25,5 +25,5 @@ python monotonic_conjugation.py --help
 
 Run on provided test data:
 ```shell
-python monotonic_conjugation.py --input data/input.txt --output data/out.txt
+python monotonic_conjugation.py --input data/in.txt --output data/out.txt
 ```

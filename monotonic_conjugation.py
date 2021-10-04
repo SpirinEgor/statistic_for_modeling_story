@@ -12,12 +12,15 @@ def float_to_int(num: float) -> int:
 
 def main(input_path: str, output_path: str):
     xs, ys = read_data(input_path)
+    n = len(xs)
+    if n < 9:
+        print("Monotonic conjugation check works correctly only for more than 9 measures.")
+        return
 
     # scipy's rankdata returns ranks from min to max, therefore manually invert them
     ranks = rankdata(ys, method="average")
     ranks = -(ranks - numpy.max(ranks) - 1)
 
-    n = len(xs)
     p = float_to_int(n / 3)
     r1 = ranks[:p].sum()
     r2 = ranks[-p:].sum()
