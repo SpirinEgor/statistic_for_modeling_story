@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 import numpy
 from scipy.stats import rankdata
 
-from io_utils import read_data, save_result
+from io_utils import read_data, save_result, validate_input_path, validate_output_path, ReadError
 
 
 def float_to_int(num: float) -> int:
@@ -11,7 +11,23 @@ def float_to_int(num: float) -> int:
 
 
 def main(input_path: str, output_path: str):
-    xs, ys = read_data(input_path)
+    try:
+        validate_input_path(input_path)
+    except FileExistsError as err:
+        print(err)
+        return
+    try:
+        validate_output_path(output_path)
+    except FileExistsError as err:
+        print(err)
+        return
+
+    try:
+        xs, ys = read_data(input_path)
+    except ReadError as err:
+        print(err)
+        return
+
     n = len(xs)
     if n < 9:
         print("Monotonic conjugation check works correctly only for more than 9 measures.")
